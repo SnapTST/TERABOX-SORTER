@@ -1,17 +1,30 @@
 {
-  "name": "teraboxdrive",
+  "name": "terabox-sorter",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-forge make"
-  },
-  "dependencies": {
-    "electron": "^29.0.0"
+    "make": "electron-forge make"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.67",
-    "@electron-forge/maker-dmg": "^6.0.0-beta.67",
-    "@electron-forge/maker-zip": "^6.0.0-beta.67"
+    "electron": "^28.0.0",
+    "@electron-forge/cli": "^7.0.0",
+    "@electron-forge/maker-dmg": "^7.0.0",
+    "@electron-forge/maker-zip": "^7.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-dmg",
+          "platforms": ["darwin"]
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": ["darwin"]
+        }
+      ]
+    }
   }
 }
