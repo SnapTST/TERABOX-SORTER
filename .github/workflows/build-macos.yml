@@ -1,41 +1,33 @@
-name: Build macOS App (.dmg)
+name: Build macOS App
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
-  build:
+  build-macos:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Install dependencies
         run: |
           cd electron
           npm install
 
-      - name: Build .dmg using Electron Forge
+      - name: Install Electron Forge makers
         run: |
           cd electron
-          npx electron-forge make --platform=darwin
+          npm install --save-dev @electron-forge/maker-dmg @electron-forge/maker-zip
 
-      - name: Upload .dmg Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: terabox-app-mac
-          path: electron/out/make/**/*.dmg
-
-          - name: Install missing makers
-  run: |
-    cd electron
-    npm install --save-dev @electron-forge/maker-dmg @electron-forge/maker-zip
-
+      - name: Build app
+        run: |
+          cd electron
+          npm run make
