@@ -1,22 +1,20 @@
 {
-  "name": "terabox-drive",
+  "name": "teraboxdrive",
   "version": "1.0.0",
-  "description": "Electron-based macOS client for managing TeraBox files.",
   "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "package-mac": "electron-packager . TeraBoxDrive --platform=darwin --arch=x64 --overwrite"
+  "build": {
+    "appId": "com.terabox.drive",
+    "productName": "TeraBoxDrive",
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.utilities"
+    }
   },
-  "keywords": [
-    "electron",
-    "terabox",
-    "macos",
-    "drive-manager"
-  ],
-  "author": "Prashant Pandey",
-  "license": "MIT",
+  "scripts": {
+    "build:mac": "electron-builder --mac"
+  },
   "devDependencies": {
-    "electron": "^29.1.2",
-    "electron-packager": "^17.1.1"
+    "electron": "^28.1.0",
+    "electron-builder": "^24.0.0"
   }
 }
