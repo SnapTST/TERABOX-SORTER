@@ -1,4 +1,4 @@
-name: Build Electron macOS App
+name: Build Electron macOS .dmg
 
 on:
   push:
@@ -7,16 +7,14 @@ on:
 
 jobs:
   build-macos:
-    # You can lock to macos-14 if you want to avoid the auto-upgrade to macOS 15
-    # Or keep macos-latest for the newest available
-    runs-on: macos-14
+    runs-on: macos-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
@@ -25,13 +23,13 @@ jobs:
           cd electron
           npm install
 
-      - name: Build Electron app for macOS (.app)
+      - name: Build .dmg with electron-builder
         run: |
           cd electron
-          npx electron-packager . TeraBoxDrive --platform=darwin --arch=x64 --overwrite
+          npx electron-builder --mac
 
-      - name: Upload macOS .app artifact
+      - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TeraBoxDrive-macos-app
-          path: electron/TeraBoxDrive-darwin-x64/TeraBoxDrive.app
+          name: TeraBoxDrive-macOS-dmg
+          path: electron/dist/*.dmg
