@@ -1,0 +1,36 @@
+
+name: Build Electron macOS App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: |
+        cd electron
+        npm install
+
+    - name: Build Electron app for macOS (.app)
+      run: |
+        cd electron
+        npx electron-packager . TeraBoxDrive --platform=darwin --arch=x64 --overwrite
+
+    - name: Upload macOS .app artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: TeraBoxDrive-macos-app
+        path: electron/TeraBoxDrive-darwin-x64/TeraBoxDrive.app
