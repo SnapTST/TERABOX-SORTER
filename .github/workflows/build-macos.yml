@@ -1,35 +1,23 @@
-name: Build Electron macOS .dmg
+name: Build macOS DMG
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build-macos:
     runs-on: macos-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
+      - uses: actions/checkout@v3
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: |
-          cd electron
-          npm install
+      - run: npm install
+      - run: npm install --save-dev @electron-forge/maker-dmg
+      - run: npm run build
 
-      - name: Build .dmg with electron-builder
-        run: |
-          cd electron
-          npx electron-builder --mac
-
-      - name: Upload .dmg artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload DMG
+        uses: actions/upload-artifact@v3
         with:
-          name: TeraBoxDrive-macOS-dmg
-          path: electron/dist/*.dmg
+          name: terabox-macos-app
+          path: out/make/dmg/**/*.dmg
