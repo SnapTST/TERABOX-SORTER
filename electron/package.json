@@ -2,19 +2,16 @@
   "name": "teraboxdrive",
   "version": "1.0.0",
   "main": "main.js",
-  "build": {
-    "appId": "com.terabox.drive",
-    "productName": "TeraBoxDrive",
-    "mac": {
-      "target": ["dmg"],
-      "category": "public.app-category.utilities"
-    }
-  },
   "scripts": {
-    "build:mac": "electron-builder --mac"
+    "start": "electron .",
+    "build": "electron-forge make"
+  },
+  "dependencies": {
+    "electron": "^29.0.0"
   },
   "devDependencies": {
-    "electron": "^28.1.0",
-    "electron-builder": "^24.0.0"
+    "@electron-forge/cli": "^6.0.0-beta.67",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.67",
+    "@electron-forge/maker-zip": "^6.0.0-beta.67"
   }
 }
