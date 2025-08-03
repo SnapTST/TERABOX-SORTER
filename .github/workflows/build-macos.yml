@@ -33,3 +33,9 @@ jobs:
         with:
           name: terabox-app-mac
           path: electron/out/make/**/*.dmg
+
+          - name: Install missing makers
+  run: |
+    cd electron
+    npm install --save-dev @electron-forge/maker-dmg @electron-forge/maker-zip
+
